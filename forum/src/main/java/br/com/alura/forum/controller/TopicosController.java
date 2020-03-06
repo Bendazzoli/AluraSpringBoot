@@ -40,10 +40,10 @@ public class TopicosController {
 	@Cacheable(value="listaTopicos")
 	@GetMapping
 	public Page<TopicoDTO> lista(@RequestParam(required = false) String nomeCurso,
-								 @RequestParam @PageableDefault(sort = "id",
-										 						direction = Sort.Direction.ASC,
-								 								page = 0,
-								 								size = 10) Pageable paginacao){
+								 @PageableDefault(sort = "id",
+										          direction = Sort.Direction.ASC,
+										          page = 0,
+								 				  size = 10) Pageable paginacao){
 
 		if(nomeCurso == null) {
 			return TopicoDTO.converter(topicoRepository.findAll(paginacao));
