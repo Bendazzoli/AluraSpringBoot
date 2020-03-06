@@ -13,6 +13,7 @@ import br.com.alura.forum.modelo.Topico;
 import br.com.alura.forum.repository.CursoRepository;
 import br.com.alura.forum.repository.TopicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -35,6 +36,7 @@ public class TopicosController {
 	@Autowired
 	CursoRepository cursoRepository;
 
+	@Cacheable(value = "listaTopicos")
 	@GetMapping
 	public Page<TopicoDTO> lista(@RequestParam(required = false) String nomeCurso,
 								 @RequestParam @PageableDefault(sort = "id",
