@@ -2,6 +2,7 @@ package br.com.alura.forum.controller;
 
 import br.com.alura.forum.config.security.TokenService;
 import br.com.alura.forum.controller.form.LoginForm;
+import br.com.alura.forum.dto.TokenDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,16 +27,13 @@ public class AutenticacaoController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity autenticar(@RequestBody @Valid LoginForm form){
+    public ResponseEntity<TokenDTO> autenticar(@RequestBody @Valid LoginForm form){
         UsernamePasswordAuthenticationToken login = form.converter();
 
         try {
             Authentication authentication = oauthManager.authenticate(login);
             String token = tokenService.gerarToken(authentication);
-
-            System.out.println("token :" + token);
-
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(new TokenDTO(token, "Bearer"));
         }catch (AuthenticationException e){
             return ResponseEntity.badRequest().build();
         }
