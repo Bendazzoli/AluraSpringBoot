@@ -18,6 +18,10 @@ public class Usuario implements UserDetails {
 	private String email;
 	private String senha;
 
+	public List<Perfil> getPerfis() {
+		return perfis;
+	}
+
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Perfil> perfis = new ArrayList<>();
 
